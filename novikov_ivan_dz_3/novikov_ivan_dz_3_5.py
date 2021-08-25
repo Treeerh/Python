@@ -12,16 +12,18 @@
 #   Сможете ли вы добавить еще один аргумент — флаг, разрешающий или запрещающий повторы
 #   слов в шутках (когда каждое слово можно использовать только в одной шутке)?
 #   Сможете ли вы сделать аргументы именованными?
-import random
+import random as ran
 
-def get_jokes(numbs,flag='True'):
+def get_jokes(numbs):
     nouns = ["автомобиль", "лес", "огонь", "город", "дом"]
     adverbs = ["сегодня", "вчера", "завтра", "позавчера", "ночью"]
     adjectives = ["веселый", "яркий", "зеленый", "утопичный", "мягкий"]
+    rez=[]
+    for _ in range(numbs):
+        rez.append(f'{ran.choice(nouns)} {ran.choice(adverbs)} {ran.choice(adjectives)}')
 
-    pass
+    return rez
 
+n = int(input('Введите количество шуток : '))
 
-
-
-get_jokes()
+print(get_jokes(n))
