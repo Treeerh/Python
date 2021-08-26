@@ -9,35 +9,34 @@
 #       которого нет в ответе, вернуть None. Можно ли сделать работу функции не зависящей от 
 #       того, в каком регистре был передан аргумент? В качестве примера выведите курсы доллара и евро.
 from requests import get
-from sys import argv
 from decimal import Decimal as dec
-import datetime
+
 
 def currency_rates(char_c):
-    response_0 = get('http://www.cbr.ru/scripts/XML_daily.asp')  #получили страницу 
-    content = response_0.content.decode(encoding=response_0.encoding)       #декодировали ее
+    global days
+    response = get('http://www.cbr.ru/scripts/XML_daily.asp')  #получили страницу
+    content = response.content.decode(encoding=response.encoding)       #декодировали ее
     charcode = []
     value = []
     rez = {}
     char_c = char_c.upper()
     for el in content.split('Date="'):
-        dates = ''.join(el.split('"')[:1])
+        days = ''.join(el.split('"')[:1]).replace('.','/')
     for el in content.split('<CharCode>'):
         charcode.append(''.join(el.split('</CharCode>')[:-1]))
     for el in content.split('<Value>'):
-        value.append( (''.join(el.split('</Value>')[:-1])).replace(',', '.') )
+        value.append((''.join(el.split('</Value>')[:-1])).replace(',', '.'))
     for i in range(len(charcode)):
         rez[charcode[i]] = value[i]
-   
     if char_c in rez:
-       return f'Курс {char_c} на {dates} составляет {dec(rez[char_c])} рублей'
+        return f'Курс {char_c} на {days} составляет {dec(rez[char_c])} рублей'
+
 
 if __name__ == '__main__':
-    if argv[1:]:
-        print(currency_rates(argv[1]))
-    else:
-        chcd = input('Введите валюту :')
-        print(currency_rates(chcd))
-    
+    print(currency_rates('USD'))
+    print(currency_rates('Usd'))
+    print(currency_rates('EUR'))
+    print(currency_rates('EuR'))
+    print(currency_rates('Nom'))
     
     
