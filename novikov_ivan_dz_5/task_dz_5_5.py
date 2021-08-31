@@ -8,4 +8,29 @@
 
 
 src = [2, 2, 2, 7, 23, 1, 44, 44, 3, 2, 10, 7, 4, 11]
-src = {2, 2, 2, 7, 23, 1, 44, 44, 3, 2, 10, 7, 4, 11}
+def my_list(job_list):
+    temp = {}
+    for idx in job_list:
+        if idx in temp:
+            temp[idx] += 1
+        else:
+            temp[idx] = 1
+    for idx in job_list:
+        if temp[idx] == 1:
+            yield idx
+        
+my = my_list(src)
+print(*my)
+
+def mylist(job_list):
+    for idx in job_list:
+        if job_list.count(idx) == 1:
+            yield idx
+
+my = mylist(src)
+print(*my)
+
+my = [idx for idx in src if src.count(idx) == 1]
+print(my)
+
+
