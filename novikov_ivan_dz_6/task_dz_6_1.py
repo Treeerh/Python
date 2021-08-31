@@ -13,10 +13,11 @@
 #   ]
 
 with open('nginx_logs.txt', 'r', encoding='utf-8') as file_r:
+    temps = []
     for idx in file_r.readlines():
-        #print(idx, end = '')
-        #remote_addr = ''.join(idx.split()[:1])
-        request_type = ''.join(idx.split('"')[1:2])[:-8]
-        #requested_resource = idx 
-        #print(remote_addr)
-        print(request_type)
+        remote_addr = ''.join(idx.split()[:1])
+        request_type = (''.join(idx.split('"')[1:2])[:-8]).split()[0]
+        requested_resource = (''.join(idx.split('"')[1:2])[:-8]).split()[1]
+        temps.append((remote_addr, request_type,requested_resource))
+
+print(temps)
