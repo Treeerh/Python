@@ -12,12 +12,14 @@
 #    ...
 #   ]
 
-with open('nginx_logs.txt', 'r', encoding='utf-8') as file_r:
+with open('nginx_logs.txt', 'r', encoding='utf-8') as file_r, \
+        open('log_dz_1.txt', 'w', encoding='utf-8') as file_w:
     temps = []
     for idx in file_r.readlines():
         remote_addr = ''.join(idx.split()[:1])
         request_type = (''.join(idx.split('"')[1:2])[:-8]).split()[0]
         requested_resource = (''.join(idx.split('"')[1:2])[:-8]).split()[1]
-        temps.append((remote_addr, request_type,requested_resource))
+        temps.append((remote_addr, request_type, requested_resource))
+        file_w.write(f'{remote_addr} {request_type} {requested_resource} \n')
 
-print(temps)
+print(temps[:10])
