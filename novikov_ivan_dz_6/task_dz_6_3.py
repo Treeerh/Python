@@ -12,7 +12,7 @@
 #       скалолазание,охота
 #       горные лыжи
 from itertools import zip_longest as zl
-import json,sys
+import json, sys
 
 with open('users.csv', 'r', encoding='utf-8') as f_user, \
         open('hobby.csv', 'r', encoding='utf-8') as f_hobby:
@@ -22,14 +22,17 @@ with open('users.csv', 'r', encoding='utf-8') as f_user, \
     lfp = []
     hobby = []
     for rlineuser in rlineusers:
-        lfp.append(''.join(rlineuser.split(',')).replace('\n', ''))
+        u = ' '.join(rlineuser.split(',')).replace('\n','')
+        lfp.append(u)
     for rlinehobby in rlinehobbys:
-        hobby.append(''.join(rlinehobby.replace('\n', '')))
+        hi = ' '.join(rlinehobby.split()).replace('\n','')
+        hobby.append(hi)
     if len(lfp) < len(hobby):
         sys.exit(1)
     else:
         for l, h in zl(lfp, hobby[:len(lfp)], fillvalue=None):  # Вместо None почемуто пишет null
             lfp_hobby[l] = h
+
 
 with open('lfp_hobby.csv', 'w', encoding='utf-8') as f_zer:
     lfp_hobby_str = json.dumps(lfp_hobby, ensure_ascii=False, indent=4)
