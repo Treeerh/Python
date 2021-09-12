@@ -28,16 +28,25 @@ from yaml.loader import SafeLoader
 
 with open('temp/config.yaml', 'r', encoding='UTF-8') as f_r:
     conf = yaml.load(f_r, Loader=SafeLoader)  # Список словарей
-    #print(conf)
+
+root = os.getcwd()
+
+
 def print_dict(v, prefix=''):
     if isinstance(v, dict):
         for k, v2 in v.items():
             p2 = f'{prefix}\\{k}'
+            os.makedirs(root + p2)
             print_dict(v2, p2)
     elif isinstance(v, list):
         for i, v2 in enumerate(v):
             p2 = f"{prefix}"
             print_dict(v2, p2)
     else:
-        os.makedirs(f'{prefix}\\{repr(v)}')
+        fle = repr(v).replace("'", '')
+        f_path = f'{prefix}\\{fle}'
+        with open(root + f_path, 'x', encoding='utf-8') as f:
+            pass
+
+
 print(print_dict(conf))
