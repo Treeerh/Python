@@ -14,7 +14,7 @@ with open('nginx_logs.txt', 'r', encoding='utf-8') as f:
     r_file = f.readlines()
     # print(r_file[:5])
     patt_ip = re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
-    patt_datetime = re.compile(r'[\d\w/: \+]')
+    #patt_datetime = re.compile(r'[\d\w/: \+]')
     # r'(?P<request_type>[a-zA-Z0-9_.+-]+)'
     # r'(?P<requested_resource>[a-zA-Z0-9_.+-]+)'
     # r'(?P<response_code>[a-zA-Z0-9_.+-]+)'
@@ -22,7 +22,7 @@ with open('nginx_logs.txt', 'r', encoding='utf-8') as f:
     log ={}
     for idx in r_file:
         log['remote_addr'] = patt_ip.findall(idx)
-        log['request_datetime'] = patt_datetime.findall(idx)
+        #log['request_datetime'] = patt_datetime.findall(idx)
         print(log)
 
 

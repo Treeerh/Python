@@ -15,7 +15,7 @@ import re, sys
 
 
 def parser_mail(e_mail):
-    #patt = re.compile(r'^(?P<login>\w+)@(?P<domain>\w+\.\w+)$')
+    # patt = re.compile(r'^(?P<login>\w+)@(?P<domain>\w+\.\w+)$')
     patt = re.compile(r"(?P<login>[a-zA-Z0-9_.+-]+)@(?P<domain>[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)")
     res = patt.match(e_mail)
     if "@" in e_mail:
@@ -25,6 +25,5 @@ def parser_mail(e_mail):
 
 
 print(parser_mail('ivan-56@bk.ru'))
+
 print(parser_mail('ivan-56bk.ru'))
-
-
