@@ -8,21 +8,21 @@
 # parsed_raw = ('188.138.60.101', '17/May/2015:08:05:49 +0000', 'GET', '/downloads/product_2', '304', '0')
 # Примечание: вы ограничились одной строкой или проверили на всех записях
 # лога в файле? Были ли особенные строки? Можно ли для них уточнить регулярное выражение?
-import re
+import re,json
 
-with open('nginx_logs.txt', 'r', encoding='utf-8') as f:
+with open('nginx_logs.txt', 'r', encoding='utf-8') as f, \
+        open('n_logs.txt', 'w', encoding='utf-8') as new_f:
     r_file = f.readlines()
-    # print(r_file[:5])
-    patt_ip = re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
-    #patt_datetime = re.compile(r'[\d\w/: \+]')
-    # r'(?P<request_type>[a-zA-Z0-9_.+-]+)'
-    # r'(?P<requested_resource>[a-zA-Z0-9_.+-]+)'
-    # r'(?P<response_code>[a-zA-Z0-9_.+-]+)'
-    # r'(?P<response_size>[a-zA-Z0-9_.+-]+)'
-    log ={}
+    patt_ip = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+    patt_datetime = re.compile(r'\[([\d\w/: \+]+)\]')
+    request_type = re.compile(r'[A-Z]{3}')
+    requested_resource = re.compile(r'(\w+/\w+)')
+    response_code_size = re.compile(r'\d{1,3} \d{1,3}')
+    log = {}
     for idx in r_file:
         log['remote_addr'] = patt_ip.findall(idx)
-        #log['request_datetime'] = patt_datetime.findall(idx)
-        print(log)
-
-
+        log['request_datetime'] = patt_datetime.findall(idx)
+        log['request_type'] = request_type.findall(idx)[0]
+        log['requested_resource'] = requested_resource.findall(idx)[1]
+        log['response_code_size'] = response_code_size.findall(idx)
+        new_f.write(f'{log}\r')
