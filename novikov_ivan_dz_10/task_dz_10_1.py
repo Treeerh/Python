@@ -23,12 +23,40 @@
 # Первый элемент первой строки первой матрицы складываем
 # с первым элементом первой строки второй матрицы и пр.
 
-from abc import ABC,abstractmethod
-class Matrix():
-    def __init__(self, matrix=[]):
-        self.matrix = matrix[]
+from abc import ABC, abstractmethod
 
+
+class Matrix:
+    def __init__(self, matrix):
+        self.matrix = matrix
 
     def __str__(self):
-        for i in range(len(self.matrix)):
-            for j in renge
+        return '\n'.join(map(str, self.matrix))
+
+    def rang_matrix(self):
+        l = len(self.matrix)
+        r = len(self.matrix[0])
+        return str(l) + str(r)
+
+    def __add__(self, other):
+        if self.rang_matrix() == other.rang_matrix():
+            matrix = []
+            for i in range(len(self.matrix)):
+                temp = []
+                for j in range(len(self.matrix[i])):
+                    temp.append(self.matrix[i][j] + other.matrix[i][j])
+                matrix.append(temp)
+
+            return Matrix(matrix)
+        else:
+            return 'Matrices do not match'
+
+
+m_1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+m_2 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+matrix_1 = Matrix(m_1)
+matrix_2 = Matrix(m_2)
+
+matrix = matrix_1 + matrix_2
+print(matrix)
