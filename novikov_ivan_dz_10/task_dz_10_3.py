@@ -56,10 +56,10 @@ class Cell:
 
 
 cell_1 = Cell(12)
-cell_2 = Cell(5)
+cell_2 = Cell(12)
 print(cell_1 + cell_2)
 print(cell_1 - cell_2)
 print(cell_1 * cell_2)
 print(cell_1 // cell_2)
 
-print(cell_2.make_order(7))
+print(cell_2.make_order(5))
